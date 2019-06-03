@@ -53,8 +53,8 @@ copy_mongodb_key_file:
   file.managed:
     - name: {{ mongodb.cluster_key_file }}
     - contents_pillar: 'mongodb:cluster_key'
-    - owner: mongodb
-    - group: mongodb
+    - owner: mongod
+    - group: mongod
     - mode: 0600
     - require:
       - file: place_mongodb_config_file
