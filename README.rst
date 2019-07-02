@@ -9,6 +9,15 @@ SaltStack formula for building a MongoDB replica set with access controls.
     See the full `Salt Formulas installation and usage instructions
     <http://docs.saltstack.com/en/latest/topics/development/conventions/formulas.html>`_.
 
+============
+REQUIREMENTS
+============
+
+grains.append roles mongodb_primary (to the designated mongodb primary node to start)
+grains.append roles mongodb_secondary (to the others)
+pkg.install python-pip
+
+
 
 Available states
 ================
