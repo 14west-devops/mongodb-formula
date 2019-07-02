@@ -43,6 +43,10 @@ add_{{ user.name }}_user_to_{{ user.database }}:
     - database: {{ user.database }}
     - host: localhost
     - port: {{ mongodb.config.net.port }}
+    - user: {{ MONGO_ADMIN_USER }}
+    - password: {{ MONGO_ADMIN_PASSWORD }}
+    - authdb: admin
+    - roles: {{ user.roles }}
     - require:
       - file: place_mongodb_config_file
       - cmd: execute_root_user_script
