@@ -14,7 +14,9 @@ REQUIREMENTS
 ============
 
 grains.append roles mongodb_primary (to the designated mongodb primary node to start)
+
 grains.append roles mongodb_secondary (to the others)
+
 pkg.install python-pip
 
 
