@@ -66,7 +66,7 @@ copy_mongodb_key_file:
         - file: configure_keyfile_and_replicaset
 {% endif %}
 
-{% if 'mongodb_primary' in grains['roles'] %}
+{% if 'mongodb_primary' in salt['grains.get']('roles', []) %}
 {% set replset_config = salt.pillar.get('mongodb:replset_config') %}
 
 initiate_replset:
