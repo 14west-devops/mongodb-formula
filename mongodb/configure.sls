@@ -25,7 +25,7 @@ place_root_user_script:
         MONGO_ADMIN_USER: {{ MONGO_ADMIN_USER }}
         MONGO_ADMIN_PASSWORD: {{ MONGO_ADMIN_PASSWORD }}
 
-{% if (mongodb_cluster_key and 'mongodb_primary' in grains['roles'])
+{% if (mongodb_cluster_key and 'mongodb_primary' in salt['grains.get']('roles', []))
    or not (mongodb_cluster_key) %}
 execute_root_user_script:
   cmd.run:
