@@ -28,8 +28,7 @@ place_root_user_script:
 execute_root_user_script:
   cmd.run:
     - name: {{ mongo_cmd }} /tmp/create_root.js
-    - onlyif: {{ "true" if ((mongodb_cluster_key and 'mongodb_primary' in salt['grains.get']('roles', []))
-    or not (mongodb_cluster_key) or salt['pillar.get']('mongodb:primary', false))  else "false" }}
+    - onlyif: {{ salt['pillar.get']('mongodb:primary', false) | lower }}
     - require:
       - file: place_root_user_script
       - service: mongodb_service_running
@@ -65,7 +64,7 @@ copy_mongodb_key_file:
         - file: configure_keyfile_and_replicaset
 {% endif %}
 
-{% if 'mongodb_primary' in salt['grains.get']('roles', []) %}
+{% if salt['pillar.get']('mongodb:primary', false) %}
 {% set replset_config = salt.pillar.get('mongodb:replset_config') %}
 
 initiate_replset:
