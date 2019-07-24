@@ -25,16 +25,14 @@ place_root_user_script:
         MONGO_ADMIN_USER: {{ MONGO_ADMIN_USER }}
         MONGO_ADMIN_PASSWORD: {{ MONGO_ADMIN_PASSWORD }}
 
-{% if (mongodb_cluster_key and 'mongodb_primary' in salt['grains.get']('roles', []))
-   or not (mongodb_cluster_key) %}
 execute_root_user_script:
   cmd.run:
     - name: {{ mongo_cmd }} /tmp/create_root.js
+    - onlyif: {{ "true" if ((mongodb_cluster_key and 'mongodb_primary' in salt['grains.get']('roles', [])) or not (mongodb_cluster_key)) else "false" }}
     - require:
       - file: place_root_user_script
       - service: mongodb_service_running
-{% endif %}
-
+      
 {% for user in salt.pillar.get('mongodb:users', {}) %}
 add_{{ user.name }}_user_to_{{ user.database }}:
   mongodb_user.present:
