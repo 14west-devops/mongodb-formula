@@ -28,7 +28,8 @@ place_root_user_script:
 execute_root_user_script:
   cmd.run:
     - name: {{ mongo_cmd }} /tmp/create_root.js
-    - onlyif: {{ "true" if ((mongodb_cluster_key and 'mongodb_primary' in salt['grains.get']('roles', [])) or not (mongodb_cluster_key)) else "false" }}
+    - onlyif: {{ "true" if ((mongodb_cluster_key and 'mongodb_primary' in salt['grains.get']('roles', []))
+    or not (mongodb_cluster_key) or salt['pillar.get']('mongodb:primary', false))  else "false" }}
     - require:
       - file: place_root_user_script
       - service: mongodb_service_running
